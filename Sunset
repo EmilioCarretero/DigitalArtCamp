@@ -1,0 +1,34 @@
+function setup() {
+  createCanvas(400, 400);
+  sunX = 0
+  sunY = 0
+}
+
+function draw() {
+  noStroke()
+  
+  //Sunset
+  background(100, 150, 255)
+  
+  //Sun
+  fill(255, 250, 75)
+  circle(150 + sunX, -50 + sunY, 70)
+  sunX = sunX + 0.1
+  sunY = sunY + 0.75
+  
+  //Mountains
+  fill(250)
+  rect(0, 320, 400, 80)
+  triangle(-100, 320, 50, 260, 100, 320)
+  triangle(100, 320, 140, 300, 180, 320)
+  triangle(180, 320, 230, 290, 400, 320)
+  triangle(255, 320, 350, 150, 400, 320)
+  triangle(300, 320, 390, 190, 450, 320)
+  
+  fill(175)
+  triangle(65, 500, 50, 260, 100, 320)
+  triangle(155, 500, 140, 300, 180, 320)
+  triangle(245, 500, 230, 290, 270, 295)
+  triangle(365, 500, 350, 150, 370, 218)
+  triangle(405, 500, 390, 190, 450, 320)
+}
