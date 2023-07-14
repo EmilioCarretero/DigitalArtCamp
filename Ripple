@@ -1,0 +1,48 @@
+function setup() {
+  createCanvas(400, 400);
+  stroke(255, 255, 255)
+  strokeWeight(5)
+  noFill() 
+  
+  size1 = 0
+  xMouse1 = 0
+  yMouse1 = 0
+  size2 = 0
+  xMouse2 = 0
+  yMouse2 = 0
+  size3 = 0
+  xMouse3 = 0
+  yMouse3 = 0
+  rippleNumber = 0
+}
+
+function mouseClicked() {
+  //remember point at which mouse was clicked and randomize colour
+  if(rippleNumber == 0){
+    xMouse1 = mouseX;
+    yMouse1 = mouseY;
+    size1 = 10;
+    rippleNumber = 1;
+  }else if(rippleNumber == 1){
+    xMouse2 = mouseX;
+    yMouse2 = mouseY; 
+    size2 = 10;
+    rippleNumber = 2;
+  }else if(rippleNumber == 2){
+    xMouse3 = mouseX;
+    yMouse3 = mouseY; 
+    size3 = 10;
+    rippleNumber = 0;
+  }
+}
+
+function draw() {
+  background(50, 200, 255);
+  //draw growing circle
+  size1 = size1 + 12
+  size2 = size2 + 12
+  size3 = size3 + 12
+  circle(xMouse1, yMouse1, size1);
+  circle(xMouse2, yMouse2, size2);
+  circle(xMouse3, yMouse3, size3);
+}
