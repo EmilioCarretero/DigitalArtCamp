@@ -1,0 +1,306 @@
+/*
+Emilio Carretero
+August 10, 2022
+
+The function of this code is to create a two player game of Tron. Tron being my favorite childhood game. Player one uses the keys: A, S, D, W to control the blue bike. While player two uses the arrow keys to  control the orange bike. The goal is to outlive your opponent. By leaving a trail of wall you must cause the other player to crash. Whichever player hits their own wall, the other players wall or the border first: loses. The game will then rest.
+
+**Known bugs and issues**
+- Must click on screen before being able to control bikes, has something to do with the 'keyPressed();' function. Probably an easy fix.
+- square is drawn from corner, this results in the square grazing on a wall or line without crashing
+- sometimes if bikes are too close to eachother and collide the can pass through eachother
+*/
+
+let playerOneScore = 0;
+let playerTwoScore = 0;
+
+function setup() {
+  createCanvas(800, 800);
+  background(0);
+  noStroke();
+  textSize(32);
+
+  //this is where all the variables and arrays are defined, 'setup();' is called everytime a bike crashes
+  wKey = false;
+  aKey = false;
+  sKey = false;
+  dKey = true;
+
+  upArrow = false;
+  leftArrow = true;
+  downArrow = false;
+  rightArrow = false;
+
+  playerOneX = 100;
+  playerOneY = 400.0;
+
+  playerTwoX = 700;
+  playerTwoY = 400;
+
+  generalPlayerOneCounter = 0;
+  generalPlayerTwoCounter = 0;
+
+  allPlayerOneValues = 0;
+  allPlayerTwoValues = 0;
+
+  counterPlayerOneX = 0;
+  counterPlayerOneY = 0;
+
+  counterPlayerTwoX = 0;
+  counterPlayerTwoY = 0;
+
+  savePlayerOneX = [];
+  savePlayerOneY = [];
+
+  savePlayerTwoX = [];
+  savePlayerTwoY = [];
+
+  gridX = 0;
+  gridY = 0;
+  //playerOnePoints = 0;
+  //playerTwoPoints = 0;
+}
+
+function keyPressed() {
+  //Player one
+  //a key pressed. The 'if' and 'else' statements are to prevent the player from doing a 180 turn
+  if (keyCode == 65) {
+    if (dKey == true) {
+      dKey = true;
+    } else {
+      wKey = false;
+      aKey = true;
+      sKey = false;
+      dKey = false;
+    }
+  }
+
+  //w key pressed. The 'if' and 'else' statements are to prevent the player from doing a 180 turn
+  if (keyCode == 87) {
+    if (sKey == true) {
+      sKey = true;
+    } else {
+      wKey = true;
+      aKey = false;
+      sKey = false;
+      dKey = false;
+    }
+  }
+
+  //s key pressed. The 'if' and 'else' statements are to prevent the player from doing a 180 turn
+  if (keyCode == 83) {
+    if (wKey == true) {
+      wKey = true;
+    } else {
+      wKey = false;
+      aKey = false;
+      sKey = true;
+      dKey = false;
+    }
+  }
+
+  //d key pressed. The 'if' and 'else' statements are to prevent the player from doing a 180 turn
+  if (keyCode == 68) {
+    if (aKey == true) {
+      akey = true;
+    } else {
+      wKey = false;
+      aKey = false;
+      sKey = false;
+      dKey = true;
+    }
+  }
+
+  //Player two
+  //left arrow key pressed. The 'if' and 'else' statements are to prevent the player from doing a 180 turn
+  if (keyCode == LEFT_ARROW) {
+    if (rightArrow == true) {
+      rightArrow = true;
+    } else {
+      upArrow = false;
+      leftArrow = true;
+      downArrow = false;
+      rightArrow = false;
+    }
+  }
+
+  //up arrow key pressed. The 'if' and 'else' statements are to prevent the player from doing a 180 turn
+  if (keyCode == UP_ARROW) {
+    if (downArrow == true) {
+      downArrow = true;
+    } else {
+      upArrow = true;
+      leftArrow = false;
+      downArrow = false;
+      rightArrow = false;
+    }
+  }
+
+  //down arrow key pressed. The 'if' and 'else' statements are to prevent the player from doing a 180 turn
+  if (keyCode == DOWN_ARROW) {
+    if (upArrow == true) {
+      upArrow = true;
+    } else {
+      upArrow = false;
+      leftArrow = false;
+      downArrow = true;
+      rightArrow = false;
+    }
+  }
+
+  //right arrow key pressed. The 'if' and 'else' statements are to prevent the player from doing a 180 turn
+  if (keyCode == RIGHT_ARROW) {
+    if (leftArrow == true) {
+      akey = true;
+    } else {
+      upArrow = false;
+      leftArrow = false;
+      downArrow = false;
+      rightArrow = true;
+    }
+  }
+}
+
+function draw() {
+  //Code for player one
+  //Player one hits wall
+  if (playerOneX >= 800) {
+    setup();
+  }
+  if (playerOneX <= 0) {
+    setup();
+  }
+  if (playerOneY >= 800) {
+    setup();
+  }
+  if (playerOneY <= 0) {
+    setup();
+  }
+
+  //Code for player two
+  //Player two hits wall
+  if (playerTwoX >= 800) {
+    setup();
+  }
+  if (playerTwoX <= 0) {
+    setup();
+  }
+  if (playerTwoY >= 800) {
+    setup();
+  }
+  if (playerTwoY <= 0) {
+    setup();
+  }
+
+  //Code for player one
+  //Create an array to remember every X,Y coordonate that player one has been on
+  savePlayerOneX[counterPlayerOneX] = playerOneX;
+  counterPlayerOneX = counterPlayerOneX + 1;
+  savePlayerOneY[counterPlayerOneY] = playerOneY;
+  counterPlayerOneY = counterPlayerOneY + 1;
+
+  //Code for player two
+  //Create an array to remember every X,Y coordonate that player two has been on
+  savePlayerTwoX[counterPlayerTwoX] = playerTwoX;
+  counterPlayerTwoX = counterPlayerTwoX + 1;
+  savePlayerTwoY[counterPlayerTwoY] = playerTwoY;
+  counterPlayerTwoY = counterPlayerTwoY + 1;
+
+  //Code for player one
+  //control movement for player one
+  if (aKey == true) {
+    playerOneX = playerOneX - 2;
+  }
+  if (wKey == true) {
+    playerOneY = playerOneY - 2;
+  }
+  if (sKey == true) {
+    playerOneY = playerOneY + 2;
+  }
+  if (dKey == true) {
+    playerOneX = playerOneX + 2;
+  }
+
+  //Code for player two
+  //control movement for player two
+  if (leftArrow == true) {
+    playerTwoX = playerTwoX - 2;
+  }
+  if (upArrow == true) {
+    playerTwoY = playerTwoY - 2;
+  }
+  if (downArrow == true) {
+    playerTwoY = playerTwoY + 2;
+  }
+  if (rightArrow == true) {
+    playerTwoX = playerTwoX + 2;
+  }
+
+  //generate grid
+  if (gridX <= 800) {
+    gridX = gridX + 8;
+    gridY = gridY + 8;
+    strokeWeight(1);
+    stroke(50);
+    line(gridX, 0, gridX, 800);
+    line(0, gridY, 800, gridY);
+    noStroke();
+  }
+
+  //Code for player one
+  //Create blue bike
+  fill(155, 225, 255);
+  square(playerOneX, playerOneY, 4);
+  //This counter is the upper limit for player one when the array needs to be searched
+  generalPlayerOneCounter = generalPlayerOneCounter + 1;
+
+  //Code for player two
+  //Create orange bike
+  fill(255, 190, 55);
+  square(playerTwoX, playerTwoY, 4);
+  //This counter is the upper limit for player two when the array needs to be searched
+  generalPlayerTwoCounter = generalPlayerTwoCounter + 1;
+
+  //Code for player one
+  //Constantly check if player one hit a line, compare every X,Y value that player one or two has been on with the current player one X,Y value
+  //the following 'while' statement is to constantly cycle through the arrays
+  while (allPlayerOneValues < generalPlayerOneCounter) {
+    if (
+      //this is where the program will search through every X,Y value that is stored in the 'savePlayerTwoX', 'savePlayerTwoY', 'savePlayerOneX' and 'savePlayerOneY' arrays. If it is found that they match the current X,Y values for player one, then it calls the 'setup();' function.
+      (savePlayerOneX[allPlayerOneValues] == playerOneX &&
+        savePlayerOneY[allPlayerOneValues] == playerOneY) ||
+      (savePlayerTwoX[allPlayerTwoValues] == playerOneX &&
+        savePlayerTwoY[allPlayerTwoValues] == playerOneY)
+    ) {
+      setup();
+      playerTwoScore = playerTwoScore + 1;
+      print(playerOneScore + " : " + playerTwoScore);
+    }
+    allPlayerOneValues = allPlayerOneValues + 1;
+    allPlayerTwoValues = allPlayerTwoValues + 1;
+  }
+  //reset values for the next cycle
+  allPlayerOneValues = 0;
+  allPlayerTwoValues = 0;
+
+  //Code for player two
+  //Costantly check if player two hit a line, compare every X,Y value that player one or two has been on with the current player two X,Y value
+  //the following 'while' statement is to constantly cycle through the arrays
+  while (allPlayerTwoValues < generalPlayerTwoCounter) {
+    if (
+      //this is where the program will search through every X,Y value that is stored in the 'savePlayerTwoX', 'savePlayerTwoY', 'savePlayerOneX' and 'savePlayerOneY' arrays. If it is found that they match the current X,Y values for player two, then it calls the 'setup();' function.
+      (savePlayerTwoX[allPlayerTwoValues] == playerTwoX &&
+        savePlayerTwoY[allPlayerTwoValues] == playerTwoY) ||
+      (savePlayerOneX[allPlayerOneValues] == playerTwoX &&
+        savePlayerOneY[allPlayerOneValues] == playerTwoY)
+    ) {
+      setup();
+      playerOneScore = playerOneScore + 1;
+      print(playerOneScore + " : " + playerTwoScore);
+    }
+    allPlayerTwoValues = allPlayerTwoValues + 1;
+    allPlayerOneValues = allPlayerOneValues + 1;
+  }
+  //reset values for the next cycle
+  allPlayerTwoValues = 0;
+  allPlayerOneValues = 0;
+}
