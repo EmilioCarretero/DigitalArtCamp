@@ -1,0 +1,50 @@
+function setup() {
+  createCanvas(400, 400);
+  xCarSpeed = 0;
+  yCarSpeed = 0;
+  redCarSpeed = random(2, 11);
+  blueCarSpeed = random(2, 11);
+  r = random(0, 250)
+  g = random(0, 250)
+  b = random(0, 250)
+}
+
+function draw() {
+  background(0, 200, 100);
+  //road
+  fill(0);
+  stroke(0);
+  rect(50, 0, 300, 400);
+  //white lines
+  stroke(255);
+  strokeWeight(5);
+  line(55, 0, 55, 400) 
+  line(345, 0, 345, 400)
+  //yellow lines
+  stroke(250, 250, 100)
+  line(195, 0, 195, 400) 
+  line(205, 0, 205, 400)
+  //red car
+  yCarSpeed = yCarSpeed + redCarSpeed; 
+  noStroke();
+  fill(250, 250, 100)
+  ellipse(235, 150 - 200 + yCarSpeed, 10, 10)
+  ellipse(310, 150 - 200 + yCarSpeed, 10, 10)
+  fill(r, g, b)
+  rect(225, 0 - 200 + yCarSpeed, 100, 150)
+  fill(150, 150, 255)
+  rect(235, 20 - 200 + yCarSpeed, 80, 15)
+  rect(235, 70 - 200 + yCarSpeed, 80, 50)
+  //blue car
+  xCarSpeed = xCarSpeed - blueCarSpeed; 
+  noStroke();
+  fill(250, 250, 100)
+  ellipse(135 - 50, 400 + 200 + xCarSpeed, 10, 10)
+  ellipse(210 - 50, 400 + 200 + xCarSpeed, 10, 10)
+  fill(b, r, g)
+  rect(125 - 50, 400 + 200 + xCarSpeed, 100, 150)
+  fill(150, 150, 255)
+  rect(135 - 50, 420 + 200 + xCarSpeed, 80, 15)
+  rect(135 - 50, 470 + 200 + xCarSpeed, 80, 50)
+
+}
