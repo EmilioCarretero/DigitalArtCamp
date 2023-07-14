@@ -1,0 +1,193 @@
+/*
+  Emilio Carretero
+  August 4, 2022.
+  
+  Instructions: Click mouse to pause and unpause animation, 
+  double click to clear and reset colour scheme.
+*/
+function setup() {
+  createCanvas(800, 800);
+
+  noFill();
+  stop = false;
+  
+//colour variables
+  r = random(0, 256);
+  g = random(0, 256);
+  b = random(0, 256);
+  rUp = true;
+  gUp = true;
+  bUp = true;
+  
+//point 1 variables
+  xp1 = random(-7, 8);
+  yp1 = random(-7, 8);
+  xSpeedp1 = 400;
+  ySpeedp1 = 400;
+  
+//point 2 variables
+  xp2 = random(-7, 8);
+  yp2 = random(-7, 8);
+  xSpeedp2 = 400;
+  ySpeedp2 = 400;
+  
+//point 3 variables
+  xp3 = random(-7, 8);
+  yp3 = random(-7, 8);
+  xSpeedp3 = 400;
+  ySpeedp3 = 400;
+  
+//point 4 variables
+  xp4 = random(-7, 8);
+  yp4 = random(-7, 8);
+  xSpeedp4 = 400;
+  ySpeedp4 = 400;
+}
+
+function doubleClicked(){
+
+//reset
+  r = random(0, 256);
+  g = random(0, 256);
+  b = random(0, 256);
+  background(0);
+}
+
+function mouseClicked(){
+  
+//pause and unpause
+  if (stop === false){
+    stop = true;
+  }else{
+    stop = false;
+  }
+}
+
+function draw() {
+      background(0,0,0,20);
+  if(stop === false){
+    
+//colours
+  //red up and down
+    if (r >= 255){
+      rUp = false;
+    }
+    if (r <= 0){
+      rUp = true;
+    }
+    if (rUp === true){
+      r = r + 1;
+    } else {
+      r = r - 1;
+    }
+  
+  //green up and down
+    if (g >= 255){
+      gUp = false;
+    }
+    if (g <= 0){
+      gUp = true;
+    }
+    if (gUp === true){
+      g = g + 1;
+    } else {
+      g = g - 1;
+    }
+  
+  //blue up and down 
+    if (b >= 255){
+      bUp = false;
+    }
+    if (b <= 0){
+      bUp = true;
+    }
+    if (bUp === true){
+      b = b + 1;
+    } else {
+      b = b - 1;
+    }
+    
+//animation
+  //lines
+    stroke(r, g, b);
+  
+    line(xSpeedp1, ySpeedp1, xSpeedp2, ySpeedp2);
+    line(xSpeedp2, ySpeedp2, xSpeedp3, ySpeedp3);
+    line(xSpeedp3, ySpeedp3, xSpeedp4, ySpeedp4);
+    line(xSpeedp4, ySpeedp4, xSpeedp1, ySpeedp1);
+  
+    noStroke();
+    
+  //point 1  
+    xSpeedp1 = xSpeedp1 + xp1;
+    ySpeedp1 = ySpeedp1 + yp1;
+  
+    if (xSpeedp1 > 800){
+      xp1 = random(-3, -8);
+    }
+    if (xSpeedp1 < 0){
+      xp1 = random(3, 8);
+    }
+
+    if (ySpeedp1 > 800){
+      yp1 = random(-3, -8);
+    }
+    if (ySpeedp1 < 0){
+      yp1 = random(3, 8);
+    }
+  
+  //point 2  
+    xSpeedp2 = xSpeedp2 + xp2;
+    ySpeedp2 = ySpeedp2 + yp2;
+  
+    if (xSpeedp2 > 800){
+      xp2 = random(-3, -8);
+    }
+    if (xSpeedp2 < 0){
+      xp2 = random(3, 8);
+    }
+
+    if (ySpeedp2 > 800){
+      yp2 = random(-3, -8);
+    }
+    if (ySpeedp2 < 0){
+      yp2 = random(3, 8);
+    }
+  
+  //point 3  
+    xSpeedp3 = xSpeedp3 + xp3;
+    ySpeedp3 = ySpeedp3 + yp3;
+  
+    if (xSpeedp3 > 800){
+      xp3 = random(-3, -8);
+    }
+    if (xSpeedp3 < 0){
+      xp3 = random(3, 8);
+    }
+
+    if (ySpeedp3 > 800){
+      yp3 = random(-3, -8);
+    }
+    if (ySpeedp3 < 0){
+      yp3 = random(3, 8);
+    }
+  
+  //point 4  
+    xSpeedp4 = xSpeedp4 + xp4;
+    ySpeedp4 = ySpeedp4 + yp4;
+  
+    if (xSpeedp4 > 800){
+      xp4 = random(-3, -8);
+    }
+    if (xSpeedp4 < 0){
+      xp4 = random(3, 8);
+    }
+
+    if (ySpeedp4 > 800){
+      yp4 = random(-3, -8);
+    }
+    if (ySpeedp4 < 0){
+      yp4 = random(3, 8);
+    }
+  }
+}
