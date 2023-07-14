@@ -1,0 +1,87 @@
+function setup() {
+  createCanvas(600, 400)
+  x = 4
+  y = 0
+  xPos = 300;
+  yPos = 200;
+  paddle1Y = 162.5
+  paddle2Y = 162.5
+  score1 = 0
+  score2 = 0
+}
+
+function draw() {
+  background(0,0,0, 50);
+  
+  //line
+  stroke(255)
+  strokeWeight(3)
+  line(300, 0, 300, 400)
+  
+  //Text
+  noStroke();
+  fill(255)
+  textFont('Courier New')
+  textSize(20)
+  text(score1, 450, 200)
+  text(score2, 150, 200)
+
+  //ball 
+  xPos = xPos + x;
+  yPos = yPos + y;
+  
+  circle(xPos, yPos, 10)
+
+  if ((xPos >= 550 && xPos <= 560) && (paddle1Y <= yPos && paddle1Y + 75 >= yPos)){
+    x = -x;
+    y = (yPos - paddle1Y)/9.3 - 4
+  }
+  
+  if ((xPos >= 50 && xPos <= 60) && (paddle2Y <= yPos && paddle2Y + 75 >= yPos)){
+    x = -x;
+    y = (yPos - paddle2Y)/9.3 - 4
+  }
+
+  if (yPos > 400){
+    y = -y;
+  }
+  if (yPos < 0){
+    y = -y;
+  }
+  
+  //Paddle 1
+  rect(550, paddle1Y, 10, 75)
+  
+  if(keyIsDown(UP_ARROW)){
+    paddle1Y = paddle1Y - 5
+  }
+  if(keyIsDown(DOWN_ARROW)){
+    paddle1Y = paddle1Y + 5
+  }
+  
+  //Paddle 2
+  rect(50, paddle2Y, 10, 75)
+  
+  if(keyIsDown(87)){
+    paddle2Y = paddle2Y - 5
+  }
+  if(keyIsDown(83)){
+    paddle2Y = paddle2Y + 5
+  }
+  
+  //score
+  if(xPos < 0){
+    score1 = score1 + 1
+    xPos = 300
+    yPos = 200
+    x = 4
+    y = 0
+  }
+  if(xPos > 600){
+    score2 = score2 + 1
+    xPos = 300
+    yPos = 200
+    x = -4
+    y = 0
+  }
+}
