@@ -1,0 +1,53 @@
+function setup() {
+  createCanvas(400, 400);
+  cookies = 0
+  milk = 0
+  size = 0
+}
+
+function mouseClicked(){
+  if(mouseX > 100 && mouseX < 300){
+    if(mouseY > 100 && mouseY < 300){
+      cookies = cookies + 1
+    }
+  }
+}
+
+function mousePressed(){
+  size = 10
+}
+
+
+function mouseReleased(){
+  size = 0
+}
+
+
+function draw() {
+  background(200, 220, 255);
+  noStroke()
+  //background
+  milk = milk + 0.1
+  fill(255)
+  circle(0, 450 - cookies*2 + milk, 300)
+  circle(100, 450 - cookies*2 + milk, 300)
+  circle(200, 450 - cookies*2 + milk, 300)
+  circle(300, 450 - cookies*2 + milk, 300)
+  circle(400, 450 - cookies*2 + milk, 300)
+  rect(0, 400 - cookies*2 + milk, 400, 1000)
+  
+  //cookie
+  fill(150, 100, 50)
+  circle(200, 200, 200 - size)
+  fill(160,120,70)
+  circle(195, 195, 195 - size)
+  fill(120, 70, 20)
+  circle(216, 228, 30 - size/4)
+  circle(140, 200, 25 - size/5)
+  circle(210, 135, 20 - size/6)
+  
+  //Text
+  fill(0)
+  textSize(20)
+  text(cookies, 200, 350)
+}
